@@ -1,5 +1,6 @@
 import { FlatList, Image, Text, View } from "react-native"
 import ContactCard from "./ContactCard"
+import { useCallback } from "react"
 
 const ItemSeparator = () => (
     <View style={{
@@ -10,10 +11,12 @@ const ItemSeparator = () => (
 )
 
 const ContactsList = ({contacts}) => {
+    const renderContactCard = useCallback(({item, index}) => <ContactCard contact={item} key={index}/>, [])
+
     return (
         <FlatList 
             data={contacts}
-            renderItem={({item}) => <ContactCard contact={item}/>}
+            renderItem={renderContactCard}
             ItemSeparatorComponent={() => <ItemSeparator />}
         />
     )
