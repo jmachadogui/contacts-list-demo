@@ -1,3 +1,4 @@
+import {memo} from "react";
 import { Image, Text, View } from "react-native"
 
 const ContactCard = ({contact}) => {
@@ -38,4 +39,4 @@ const ContactCard = ({contact}) => {
     )
 }
 
-export default ContactCard;
+export default memo(ContactCard);
