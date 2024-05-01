@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import mockedContacts from "../../mock/contacts"
 import ContactsList from "./ContactsList"
 import { useMemo } from "react"

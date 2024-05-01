@@ -1,6 +1,6 @@
 import { FlatList, Image, Text, View } from "react-native"
 import ContactCard from "./ContactCard"
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 
 const ItemSeparator = () => (
     <View style={{
@@ -11,14 +11,31 @@ const ItemSeparator = () => (
 )
 
 const ContactsList = ({contacts}) => {
+    const [header, setHeader] = useState(contacts[25].name[0]);
+
     const renderContactCard = useCallback(({item, index}) => <ContactCard contact={item} key={index}/>, [])
 
+    const onItemsChanged = useCallback(({changed, viewableItems}) => {
+        const lastViewableItem = viewableItems[viewableItems.length-1]
+
+        if(lastViewableItem){
+            const firstLetter = lastViewableItem.item.name[0]
+            if(firstLetter && firstLetter !== header)
+               setHeader(firstLetter)
+        }
+    },[header])
+
     return (
-        <FlatList 
-            data={contacts}
-            renderItem={renderContactCard}
-            ItemSeparatorComponent={() => <ItemSeparator />}
-        />
+        <>
+            <Text>{header}</Text>
+            <FlatList 
+
+                data={contacts}
+                renderItem={renderContactCard}
+                ItemSeparatorComponent={() => <ItemSeparator />}
+                onViewableItemsChanged={onItemsChanged}
+            />
+        </>
     )
 }
 
